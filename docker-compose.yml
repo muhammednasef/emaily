@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # mongo:
+  #   image: 'mongo'
+  #   container_name: 'emaily-mongo'
+  #   restart: always
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     MONGO_USERNAME: root
+  #     MONGO_PASSWORD: example
+  server:
+    image: 'kamel/emaily-server'
+    container_name: 'emaily-server'
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    ports:
+      - '8201:3000'

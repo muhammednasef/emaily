@@ -1,0 +1,30 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+  - docker build -t me/emaily -f ./server/Dockerfile ./server
+
+script:
+  - docker run me/emaily npm run test
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always
+    recipients:
+      - muhammed.nasef16@gmail.com
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push muhammedkamel/emaily
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: echo "deployment successful...."
