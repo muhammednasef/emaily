@@ -7,7 +7,7 @@ before_install:
   - docker build -t muhammedkamel/emaily -f ./server/Dockerfile ./server
 
 script:
-  - docker run me/emaily npm run test
+  - docker run muhammedkamel/emaily npm run test
 
 notifications:
   email:
